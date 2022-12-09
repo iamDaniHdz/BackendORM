@@ -4,14 +4,13 @@ export const getTasks = async (req,res) => {
     try {
         const response = await Task.findAll();
         res.status(200).json(response);
-    } catch (error) {
-        res.status(500).json({"error": error.message});
+    } catch (err) {
+        res.status(500).json({"error": err.message});
     }
 }
 
 export const createTask = async (req, res) => {
     try{
-
         const {name,done,projectId} = req.body;
 
         const createTask = await Task.create({
@@ -24,7 +23,7 @@ export const createTask = async (req, res) => {
     }catch(err){
         res.status(500).json({"error": err.message});
     }
-};
+}
 
 export const updateTask = async (req, res) => {
     try {
@@ -33,9 +32,9 @@ export const updateTask = async (req, res) => {
 
         const task = await Task.findByPk(id);
 
-        task.name = name
         task.done = done
         task.projectId = projectId
+        task.name = name
 
         await task.save();
 
